@@ -1,0 +1,23 @@
+.installed.cfg
+eggs/*
+bin/*
+build/*
+dist/*
+develop-eggs/*
+parts/*
+downloads/*
+
+#egg's specific
+*.egg-info
+
+#defaults
+*.pyc
+*.pyo
+
+#temp file
+tempfile
+*.swp
+
+# coverage 
+.coverage
+_build

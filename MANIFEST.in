@@ -1,0 +1,2 @@
+include *.txt *.rst *.json
+recursive-include countries_plus *
