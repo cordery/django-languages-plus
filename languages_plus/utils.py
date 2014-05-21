@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from rentalsite.countries_plus.models import Country
+from countries_plus.models import Country
 from .models import Language, CultureCode
 
 

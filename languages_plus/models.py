@@ -2,7 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.db.models import Q
-from rentalsite.countries_plus.models import Country
+from countries_plus.models import Country
 from django.db.models.query import QuerySet
 
 
