@@ -13,26 +13,16 @@ class LanguageManager(models.Manager):
         if any(x in code for x in ('_', '-')):
             cc = CultureCode.objects.get(code=code.replace('_', '-'))
             return cc.language
-        elif len(code) > 2:
-            try:
-                return Language.objects.get(iso_639_2=code)
-            except ObjectDoesNotExist:
-                pass
-
-            try:
-                return Language.objects.get(iso_639_3=code)
-            except ObjectDoesNotExist:
-                pass
-
-            try:
-                return Language.objects.get(iso_639_3=code)
-            except ObjectDoesNotExist:
-                pass
-
-            raise Language.DoesNotExist
-
-        else:
+        elif len(code) == 2:
             return Language.objects.get(iso_639_1=code)
+        elif len(code) == 3:
+            return Language.objects.get(Q(iso_639_2T=code) |
+                                        Q(iso_639_2B=code) |
+                                        Q(iso_639_3=code))
+        elif len(code) == 4:
+            return Language.objects.get(iso_639_6=code)
+        else:
+            raise ValueError('Code must be either 2, 3, or 4 characters: "%s" is %s' % (code, len(code)))
 
     #  Return a tuple of the language and country for a given culture code
     def get_culture_pair(self, code):

@@ -2,7 +2,9 @@
 django-languages-plus
 ===========
 
-django-languages-plus provides models and fixtures for working with both langauges and 'culture codes' or locale codes, like pt-BR.
+django-languages-plus provides models and fixtures for working with both languages and 'culture codes' or locale codes, like pt-BR.
+
+Note that this is only a small (but popular) subset of all living languages, and is not even a comprehensive set of the ISO 639 languages.  It does however include the endonym/autonym/exonym.
 
 The Language model contains all ISO 639-1 languages and related information from http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 
@@ -43,18 +45,13 @@ Usage
 
 3. In your code use::
 
-        from countries_plus.models import Country
-        usa = Country.objects.get(iso3='USA')
+        from languages_plus.models import Language
+        lang = Lanuage.objects.get(iso_639_1='en')
 
+---------------------------------------
+Integrating with django-countries-plus
+---------------------------------------
+If you also have django-countries-plus(https://pypi.python.org/pypi/django-countries-plus) installed then you can run the following command once to associate the two datasets and generate a list of culture codes (pt_BR for example)::
 
-Enbling the optional middleware::
-
-1.  Follow steps 1 & 2 above.
-
-2.  Add 'countries_plus.middleware.AddRequestCountryMiddleware' to your middleware.
-
-3.  add the following two settings:
-    COUNTRIES_PLUS_COUNTRY_HEADER   -   A string defining the name of the meta header that provides the country code.  Ex: 'HTTP_CF_COUNTRY' (from https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-CloudFlare-IP-Geolocation-do-)
-
-    COUNTRIES_PLUS_DEFAULT_ISO  -   A string containing an iso code for the country you want to use as a fallback in the case of a missing or malformed geoip header.  Ex:  'US' or 'DE' or 'BR'
-
+        from languages_plus.utils import associate_countries_and_languages
+        associate_countries_and_languages()
