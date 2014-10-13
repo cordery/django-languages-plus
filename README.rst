@@ -1,8 +1,8 @@
-===========
+=====================
 django-languages-plus
-===========
+=====================
 
-django-languages-plus provides models and fixtures for working with both languages and 'culture codes' or locale codes, like pt-BR.
+django-languages-plus provides models and fixtures for working with both common languages and 'culture codes' or locale codes, like pt-BR.
 
 Note that this is only a small (but popular) subset of all living languages, and is not even a comprehensive set of the ISO 639 languages.  It does however include the endonym/autonym/exonym.
 
@@ -55,3 +55,4 @@ If you also have django-countries-plus(https://pypi.python.org/pypi/django-count
 
         from languages_plus.utils import associate_countries_and_languages
         associate_countries_and_languages()
+
