@@ -1,2 +1,2 @@
 include *.txt *.rst *.json
-recursive-include countries_plus *
+recursive-include languages_plus *

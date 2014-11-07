@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import os
+import gzip
+
 from django.core import serializers
-from django.db import models, migrations
+from django.db import migrations
+
 
 fixture_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../fixtures'))
-fixture_filename = 'initial_data.json'
+fixture_filename = 'initial_data.json.gz'
 
 # Taken from https://stackoverflow.com/questions/25960850/loading-initial-data-with-django-1-7-and-data-migrations
 
@@ -13,7 +16,7 @@ fixture_filename = 'initial_data.json'
 def load_fixture(apps, schema_editor):
     fixture_file = os.path.join(fixture_dir, fixture_filename)
 
-    fixture = open(fixture_file, 'rb')
+    fixture = gzip.open(fixture_file, 'rb')
     objects = serializers.deserialize('json', fixture, ignorenonexistent=True)
     for obj in objects:
         obj.save()
@@ -30,8 +33,7 @@ def unload_fixture(apps, schema_editor):
     MyModel.objects.all().delete()
 
 
-class Migration(migrations.Migration):  
-
+class Migration(migrations.Migration):
     dependencies = [
         ('languages_plus', '0001_initial'),
     ]
