@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+from django.utils.encoding import python_2_unicode_compatible
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils.translation import ugettext as _
@@ -53,7 +55,7 @@ class LanguageManager(models.Manager):
         langs.sort(key=lambda x: getattr(x, sort))
         return langs
 
-
+@python_2_unicode_compatible
 class Language(models.Model):
 
     class Meta:
@@ -92,7 +94,7 @@ class Language(models.Model):
             return self.culturecode
         return self.iso_639_1
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.name_en,)
 
 
@@ -117,7 +119,7 @@ class CultureCodeManager(models.Manager, CultureCodeMixin):
     def get_query_set(self):
         return CultureCodeQuerySet(self.model, using=self._db)
 
-
+@python_2_unicode_compatible
 class CultureCode(models.Model):
 
     class Meta:
@@ -131,7 +133,7 @@ class CultureCode(models.Model):
 
     objects = CultureCodeManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.code
 
 
