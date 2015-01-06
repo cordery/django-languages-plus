@@ -32,7 +32,8 @@ class LanguageManager(models.Manager):
         cc = CultureCode.objects.get(code=code.replace('_', '-'))
         return cc.language, cc.country
 
-    #  Retrieve a list (not queryset) of languages from a list of codes that can be either iso codes (any of the three) or culture codes.
+    #  Retrieve a list (not queryset) of languages from a list of codes that can be either iso codes
+    # (any of the three) or culture codes.
     #  The language objects retreived by culture code will be annotated with the country and culture code
     def filter_by_codes(self, codes, sort='name_en'):
         lang_codes = []
@@ -45,7 +46,8 @@ class LanguageManager(models.Manager):
 
         cc_langs = CultureCode.objects.filter(code__in=cc_codes).get_culture_code_languages()
 
-        qs = self.get_queryset().filter(Q(iso_639_1__in=lang_codes) | Q(iso_639_2T__in=lang_codes) | Q(iso_639_2B__in=lang_codes) | Q(iso_639_3__in=lang_codes))
+        qs = self.get_queryset().filter(Q(iso_639_1__in=lang_codes) | Q(iso_639_2T__in=lang_codes)
+                                        | Q(iso_639_2B__in=lang_codes) | Q(iso_639_3__in=lang_codes))
         langs = [lang for lang in qs]
         langs.extend(cc_langs)
         langs.sort(key=lambda x: getattr(x, sort))
