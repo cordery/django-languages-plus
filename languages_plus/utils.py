@@ -15,13 +15,13 @@ def associate_countries_and_languages():
                     try:
                         language = Language.objects.get(iso_639_1=lang_code)
                     except ObjectDoesNotExist:
-                        print "Cannot find language identified by code %s" % lang_code
+                        print("Cannot find language identified by code %s" % lang_code)
                         continue
 
                     try:
                         country = Country.objects.get(iso=country_code)
                     except ObjectDoesNotExist:
-                        print "Cannot find country identified by code %s" % country_code
+                        print("Cannot find country identified by code %s" % country_code)
                         continue
 
                     CultureCode.objects.get_or_create(code=code, language=language, country=country)
@@ -30,7 +30,7 @@ def associate_countries_and_languages():
                         language = Language.objects.get_by_code(code)
                         country.language_set.add(language)
                     except ObjectDoesNotExist:
-                        print "Cannot find language identified by code %s" % code
+                        print("Cannot find language identified by code %s" % code)
                         continue
         else:
-            print "No langauges found for country %s" % country
+            print ("No langauges found for country %s" % country)
