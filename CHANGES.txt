@@ -1,5 +1,6 @@
+v0.1.5, 11/01/15 -- Returned to the use of initial_data. Eliminated warning for renaming get_query_set to get_queryset
 v0.1.4, 10/01/15 -- Corrected version number on setup.py
-v0.1.3,  10/01/15 -- Added Python 3 support. Added basic tests for models. Added countries plus as requirement. Changed the way fixtures auto loaded
+v0.1.3, 10/01/15 -- Added Python 3 support. Added basic tests for models. Added countries plus as requirement. Changed the way fixtures auto loaded
 v0.1.2, 07/11/14 -- Fixed gzipped fixture loading.
 v0.1.1, 05/11/14 -- Added missing initial data fixture.
 v0.1.0, 21/05/14 -- Initial release.
