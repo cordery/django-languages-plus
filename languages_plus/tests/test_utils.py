@@ -1,17 +1,17 @@
+import django
 from django.test import TestCase
 from countries_plus import Country
 from ..models import CultureCode
 from ..utils import associate_countries_and_languages
-
+import logging
 __author__ = 'luiscberrocal'
+
+logger = logging.getLogger(__name__)
 
 def setUpModule():
     associate_countries_and_languages()
 
 class TestAssociation(TestCase):
-
-    # def setUp(self):
-    #     associate_countries_and_languages()
 
     def test_count(self):
         culture_code_count = CultureCode.objects.all().count()
@@ -41,3 +41,8 @@ class TestAssociation(TestCase):
         for language in languages:
             #print('%-4s %-20s' % (language.iso, language.name_en))
             self.assertEqual(results[language.iso], str(language.name_en))
+
+    def test_get_as_languages(self):
+        languages = CultureCode.objects.as_languages()
+        self.assertEqual(len(languages), 235)
+

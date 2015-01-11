@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import django
 from django.utils.encoding import python_2_unicode_compatible
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
@@ -6,7 +7,9 @@ from django.utils.translation import ugettext as _
 from django.db.models import Q
 from countries_plus.models import Country
 from django.db.models.query import QuerySet
+import logging
 
+logger = logging.getLogger(__name__)
 
 class LanguageManager(models.Manager):
 
@@ -116,8 +119,12 @@ class CultureCodeQuerySet(QuerySet, CultureCodeMixin):
 
 class CultureCodeManager(models.Manager, CultureCodeMixin):
 
-    def get_query_set(self):
+    def get_queryset(self):
         return CultureCodeQuerySet(self.model, using=self._db)
+
+    if django.VERSION < (1, 6):
+        logger.warn('Using support for versions %s' % django.VERSION)
+        get_query_set = get_queryset
 
 @python_2_unicode_compatible
 class CultureCode(models.Model):
