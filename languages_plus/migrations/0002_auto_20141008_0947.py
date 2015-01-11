@@ -8,7 +8,7 @@ from django.db import migrations
 
 
 fixture_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../fixtures'))
-fixture_filename = 'initial_data_orig.json.gz'
+fixture_filename = 'initial_data.json.gz'
 
 # Taken from https://stackoverflow.com/questions/25960850/loading-initial-data-with-django-1-7-and-data-migrations
 
