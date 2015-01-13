@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-languages-plus',
-    version='0.1.2',
+    version='0.1.5',
     author='Andrew Cordery',
     author_email='cordery@gmail.com',
     packages=find_packages(),
