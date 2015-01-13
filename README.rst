@@ -56,3 +56,7 @@ If you also have django-countries-plus(https://pypi.python.org/pypi/django-count
         from languages_plus.utils import associate_countries_and_languages
         associate_countries_and_languages()
 
+---------------------------------------
+Requirements
+---------------------------------------
+Should work on most versions of Django, however if you are using Django 1.7, tests will fail unless you are using Django 1.7.2 or higher due to a bug in earlier versions.
