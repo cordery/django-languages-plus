@@ -1,1 +1,2 @@
 django>=1.2
+django-countries-plus>=0.3.3,<0.4
