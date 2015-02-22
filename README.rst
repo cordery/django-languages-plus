@@ -60,4 +60,5 @@ django-countries-plus(https://pypi.python.org/pypi/django-countries-plus) is now
 Requirements
 ---------------------------------------
 django-countries-plus
+
 Django:  Should work on most versions of Django, however if you are using Django 1.7, tests will fail unless you are using Django 1.7.2 or higher due to a bug in earlier versions.
