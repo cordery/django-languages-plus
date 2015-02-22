@@ -49,9 +49,9 @@ Usage
         lang = Lanuage.objects.get(iso_639_1='en')
 
 ---------------------------------------
-Integrating with django-countries-plus
+Generating Culture Codes (ex: pt_BR)
 ---------------------------------------
-If you also have django-countries-plus(https://pypi.python.org/pypi/django-countries-plus) installed then you can run the following command once to associate the two datasets and generate a list of culture codes (pt_BR for example)::
+django-countries-plus(https://pypi.python.org/pypi/django-countries-plus) is now an explicit requirement.  After installing both packages you can run the following command once to associate the two datasets and generate a list of culture codes (pt_BR for example)::
 
         from languages_plus.utils import associate_countries_and_languages
         associate_countries_and_languages()
@@ -59,4 +59,5 @@ If you also have django-countries-plus(https://pypi.python.org/pypi/django-count
 ---------------------------------------
 Requirements
 ---------------------------------------
-Should work on most versions of Django, however if you are using Django 1.7, tests will fail unless you are using Django 1.7.2 or higher due to a bug in earlier versions.
+django-countries-plus
+Django:  Should work on most versions of Django, however if you are using Django 1.7, tests will fail unless you are using Django 1.7.2 or higher due to a bug in earlier versions.
