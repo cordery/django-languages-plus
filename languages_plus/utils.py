@@ -23,7 +23,7 @@ def associate_countries_and_languages():
                     except ObjectDoesNotExist:
                         print("Cannot find country identified by code %s" % country_code)
                         continue
-
+                    country.language_set.add(language)
                     CultureCode.objects.get_or_create(code=code, language=language, country=country)
                 else:
                     try:
