@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('name_other', models.CharField(max_length=50, blank=True)),
                 ('family', models.CharField(max_length=50)),
                 ('notes', models.CharField(max_length=100, blank=True)),
-                ('countries_spoken', models.ManyToManyField(to='countries_plus.Country', null=True, blank=True)),
+                ('countries_spoken', models.ManyToManyField(to='countries_plus.Country', blank=True)),
             ],
             options={
                 'ordering': ['name_en'],
