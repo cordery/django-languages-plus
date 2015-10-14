@@ -80,7 +80,7 @@ class Language(models.Model):
     name_other = models.CharField(max_length=50, blank=True)
     family = models.CharField(max_length=50)
     notes = models.CharField(max_length=100, blank=True)
-    countries_spoken = models.ManyToManyField(Country, blank=True, null=True)
+    countries_spoken = models.ManyToManyField(Country, blank=True)
 
     objects = LanguageManager()
 
