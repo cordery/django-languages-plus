@@ -9,7 +9,11 @@ def associate_countries_and_languages():
         langs = ''
         try:
             langs = country.languages.strip(',')
+        except AttributeError:  # Antarctica for example
+            print("no languages for the country %s" % country)
+            continue
         if langs:
+            print(langs)
             codes = langs.split(",")
             for code in codes:
                 if '-' in code:
