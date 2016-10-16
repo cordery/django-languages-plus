@@ -6,10 +6,8 @@ from .models import Language, CultureCode
 
 def associate_countries_and_languages():
     for country in Country.objects.all():
-        langs = ''
-        try:
+        if country.languages:
             langs = country.languages.strip(',')
-        if langs:
             codes = langs.split(",")
             for code in codes:
                 if '-' in code:
