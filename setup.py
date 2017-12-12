@@ -13,6 +13,6 @@ setup(
     description='A django model & fixture containing common languages and culture codes',
     long_description=open('README.rst').read(),
     install_requires=[
-        "Django >= 1.2",
+        "Django >= 1.10",
     ],
 )
