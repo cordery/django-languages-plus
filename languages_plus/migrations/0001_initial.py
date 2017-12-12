@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='CultureCode',
             fields=[
                 ('code', models.CharField(max_length=10, serialize=False, primary_key=True)),
-                ('country', models.ForeignKey(to='countries_plus.Country')),
+                ('country', models.ForeignKey(to='countries_plus.Country', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['code'],
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='culturecode',
             name='language',
-            field=models.ForeignKey(to='languages_plus.Language'),
+            field=models.ForeignKey(to='languages_plus.Language', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.CreateModel(
