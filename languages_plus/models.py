@@ -135,8 +135,8 @@ class CultureCode(models.Model):
         ordering = ['code']
 
     code = models.CharField(max_length=10, primary_key=True)
-    language = models.ForeignKey('Language')
-    country = models.ForeignKey(Country)
+    language = models.ForeignKey('Language', on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
     objects = CultureCodeManager()
 
