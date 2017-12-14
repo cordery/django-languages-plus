@@ -1,46 +1,63 @@
 from __future__ import unicode_literals
-import django
-from django.utils.encoding import python_2_unicode_compatible
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
-from django.utils.translation import ugettext as _
-from django.db.models import Q
-from countries_plus.models import Country
-from django.db.models.query import QuerySet
+
 import logging
+
+from countries_plus.models import Country
+from django.db import models
+from django.db.models import Q
+from django.db.models.query import QuerySet
+from django.utils.encoding import python_2_unicode_compatible
+from django.utils.translation import ugettext as _
 
 logger = logging.getLogger(__name__)
 
+
 class LanguageManager(models.Manager):
 
-    #  Retrieve a language by either an iso code (any of the three) or its culture code.
     def get_by_code(self, code):
+        """
+        Retrieve a language by a code.
+
+        :param code: iso code (any of the three) or its culture code
+        :return: a Language object
+        """
         if any(x in code for x in ('_', '-')):
             cc = CultureCode.objects.get(code=code.replace('_', '-'))
             return cc.language
-        elif len(code) == 2:
-            return Language.objects.get(iso_639_1=code)
-        elif len(code) == 3:
-            return Language.objects.get(Q(iso_639_2T=code) |
-                                        Q(iso_639_2B=code) |
-                                        Q(iso_639_3=code))
-        elif len(code) == 4:
-            return Language.objects.get(iso_639_6=code)
-        else:
-            raise ValueError('Code must be either 2, 3, or 4 characters: "%s" is %s' % (code, len(code)))
 
-    #  Return a tuple of the language and country for a given culture code
+        elif len(code) == 2:
+            return self.get(iso_639_1=code)
+
+        elif len(code) == 3:
+            return self.get(Q(iso_639_2T=code) |
+                            Q(iso_639_2B=code) |
+                            Q(iso_639_3=code))
+
+        raise ValueError(
+            'Code must be either 2, or 3 characters: "%s" is %s' % (code, len(code)))
+
     def get_culture_pair(self, code):
+        """
+        #  Return a tuple of the language and country for a given culture code
+        :param code:
+        :return:
+        """
         if not any(x in code for x in ('_', '-')):
             raise ValueError("%s is not a valid culture code" % code)
 
         cc = CultureCode.objects.get(code=code.replace('_', '-'))
         return cc.language, cc.country
 
-    #  Retrieve a list (not queryset) of languages from a list of codes that can be either iso codes
-    # (any of the three) or culture codes.
-    #  The language objects retreived by culture code will be annotated with the country and culture code
     def filter_by_codes(self, codes, sort='name_en'):
+        """
+        Retrieve a list (not queryset) of languages from a list of codes
+        The language objects retrieved by culture code will be annotated with the country and
+        culture code.
+        :param codes: list of strings that can be either iso codes (any of the three) or culture
+        codes.
+        :param sort: str name_en|name_native|sort_code
+        :return: a list of languages
+        """
         lang_codes = []
         cc_codes = []
         for code in codes:
@@ -49,18 +66,20 @@ class LanguageManager(models.Manager):
             else:
                 lang_codes.append(code)
 
-        cc_langs = CultureCode.objects.filter(code__in=cc_codes).get_culture_code_languages()
+        cc_langs = CultureCode.objects.filter(code__in=cc_codes).as_languages()
 
-        qs = self.get_queryset().filter(Q(iso_639_1__in=lang_codes) | Q(iso_639_2T__in=lang_codes)
-                                        | Q(iso_639_2B__in=lang_codes) | Q(iso_639_3__in=lang_codes))
-        langs = [lang for lang in qs]
+        qs = self.get_queryset().filter(Q(iso_639_1__in=lang_codes) |
+                                        Q(iso_639_2T__in=lang_codes) |
+                                        Q(iso_639_2B__in=lang_codes) |
+                                        Q(iso_639_3__in=lang_codes))
+        langs = list(qs)
         langs.extend(cc_langs)
         langs.sort(key=lambda x: getattr(x, sort))
         return langs
 
+
 @python_2_unicode_compatible
 class Language(models.Model):
-
     class Meta:
         verbose_name = _('Language')
         verbose_name_plural = _('Languages')
@@ -74,10 +93,8 @@ class Language(models.Model):
     iso_639_2T = models.CharField(max_length=3, unique=True, blank=True)
     iso_639_2B = models.CharField(max_length=3, unique=True, blank=True)
     iso_639_3 = models.CharField(max_length=3, blank=True)
-    iso_639_6 = models.CharField(max_length=4, blank=True)
     name_en = models.CharField(max_length=100)
     name_native = models.CharField(max_length=100)
-    name_other = models.CharField(max_length=50, blank=True)
     family = models.CharField(max_length=50)
     notes = models.CharField(max_length=100, blank=True)
     countries_spoken = models.ManyToManyField(Country, blank=True)
@@ -92,10 +109,12 @@ class Language(models.Model):
     def name(self):
         return self.name_native
 
+    @property
+    def sort_code(self):
+        return self._get_sort_code()
+
     def _get_sort_code(self):
-        if self.culturecode:
-            return self.culturecode
-        return self.iso_639_1
+        return self.culturecode or self.iso_639_1
 
     def __str__(self):
         return u'%s' % (self.name_en,)
@@ -104,11 +123,16 @@ class Language(models.Model):
 class CultureCodeMixin(object):
 
     def as_languages(self):
+        """
+        Get the Language objects associated with this queryset of CultureCodes as a list.
+        The Language objects will have country and culturecode set.
+        :return:
+        """
         langs = []
-        for culturecode in self.all():
-            lang = culturecode.language
-            lang.country = culturecode.country
-            lang.culturecode = culturecode.code
+        for culture_code in self.select_related('language', 'country').all():
+            lang = culture_code.language
+            lang.country = culture_code.country
+            lang.culturecode = culture_code.code
             langs.append(lang)
         return langs
 
@@ -122,13 +146,9 @@ class CultureCodeManager(models.Manager, CultureCodeMixin):
     def get_queryset(self):
         return CultureCodeQuerySet(self.model, using=self._db)
 
-    if django.VERSION < (1, 6):
-        logger.warn('Using support for versions %s' % django.VERSION)
-        get_query_set = get_queryset
 
 @python_2_unicode_compatible
 class CultureCode(models.Model):
-
     class Meta:
         verbose_name = _('CultureCode')
         verbose_name_plural = _('CultureCodes')
@@ -146,7 +166,6 @@ class CultureCode(models.Model):
 
 #  fix for django-csv-importer
 class LangCountry(Country):
-
     class Meta:
         proxy = True
 
@@ -155,19 +174,34 @@ class LangCountry(Country):
 def primary_language(self):
     try:
         lang = Language.objects.get_by_code(self.languages.split(',')[0])
-    except:
+    except Language.DoesNotExist:
         return None
     return lang
 
 
 def get_all_languages(self, sort='code'):
-    langs = list(self.language_set.all())
-    langs.extend(self.culturecode_set.all().as_languages())
+    """
+    Retrieve all the language objects for a country.  Language objects will be annotated with
+    the country and culturecode attributes when applicable.
+    :param sort: code|name_en|name_native
+    :return:
+    """
+    langs = list(self.culturecode_set.all().as_languages())
+    langs.extend(self.language_set.exclude(iso_639_1__in=[x.iso_639_1 for x in langs]))
     if sort in ['name_en', 'name_native']:
         langs.sort(key=lambda x: getattr(x, sort))
+    elif sort == 'code':
+        codes = self.languages.split(',')
+
+        def code_sort(x):
+            return codes.index(x.sort_code)
+
+        langs.sort(key=code_sort)
     else:
-        langs.sort(key=lambda x: self.languages.split(',').index(x._get_sort_code()))
+        raise ValueError(
+            'Invalid code option %s.  Valid options are: code, name_en, name_native' % sort)
     return langs
+
 
 Country.add_to_class('primary_language', primary_language)
 Country.add_to_class('get_all_languages', get_all_languages)

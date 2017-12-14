@@ -1,6 +1,17 @@
-=====================
-django-languages-plus
-=====================
+=============================
+Django Languages Plus
+=============================
+
+.. image:: https://badge.fury.io/py/django-languages-plus.svg
+    :target: https://badge.fury.io/py/django-languages-plus
+
+.. image:: https://travis-ci.org/cordery/django-languages-plus.svg?branch=master
+    :target: https://travis-ci.org/cordery/django-languages-plus
+
+.. image:: https://codecov.io/gh/cordery/django-languages-plus/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/cordery/django-languages-plus
+
+
 
 django-languages-plus provides models and fixtures for working with both common languages and 'culture codes' or locale codes, like pt-BR.
 
@@ -10,17 +21,13 @@ The Language model contains all ISO 639-1 languages and related information from
 
 The model provides the following fields (original wikipedia.org column name in parentheses).
 
-* name_en (Language name (in english))
-* name_native (Native name)
+* name_en (ISO Language Name)
+* name_native (Native Name)
 * iso_639_1 (639-1)
-* iso_639_2T = (639-2T)
-* iso_639_2B = (639-2B)
+* iso_639_2T = (639-2/T)
+* iso_639_2B = (639-2/B)
 * iso_639_3 = (639-3)
-* iso_639_6 = (639-6)
-* name_en = models
-* name_native = mo
-* name_other = mod
-* family = models.
+* family = (Language Family)
 * countries_spoken
 
 
@@ -39,14 +46,15 @@ Usage
 
 1. Add ``languages_plus`` to your INSTALLED_APPS
 
-2. Sync your fixtures::
+2. Migrate your database and load the language data fixture::
 
-        python manage.py syncdb
+        python manage.py migrate
+        python manage.py loaddata languages_data.json.gz
 
 3. In your code use::
 
         from languages_plus.models import Language
-        lang = Lanuage.objects.get(iso_639_1='en')
+        lang = Language.objects.get(iso_639_1='en')
 
 ---------------------------------------
 Generating Culture Codes (ex: pt_BR)
@@ -62,3 +70,27 @@ Requirements
 django-countries-plus
 
 Django:  Should work on most versions of Django, however if you are using Django 1.7, tests will fail unless you are using Django 1.7.2 or higher due to a bug in earlier versions.
+
+
+
+Running Tests
+-------------
+
+Does the code actually work?
+
+::
+
+    source <YOURVIRTUALENV>/bin/activate
+    (myenv) $ pip install tox
+    (myenv) $ tox
+
+Credits
+-------
+
+Tools used in rendering this package:
+
+*  Cookiecutter_
+*  `cookiecutter-djangopackage`_
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
