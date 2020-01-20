@@ -6,8 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.1.0]
+### Added
+- Added support and tests for Django 3.0 (thanks OskarPersson)
+### Changed
+- Switched to poetry for dependency management & pytest for tests.
+
 ## [1.0.0]
-# Added
+### Added
 - Added support and tests for Django 2.0 (thanks decibyte)
 - Improved associate_countries_and_languages's handling of countries with no languages (thanks decibyte)
 
