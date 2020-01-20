@@ -69,7 +69,7 @@ Requirements
 ---------------------------------------
 django-countries-plus
 
-Django:  Should work on most versions of Django, however if you are using Django 1.7, tests will fail unless you are using Django 1.7.2 or higher due to a bug in earlier versions.
+Django:  Tested against the latest versions of 1.11, 2, and 3.
 
 
 
@@ -80,17 +80,13 @@ Does the code actually work?
 
 ::
 
-    source <YOURVIRTUALENV>/bin/activate
-    (myenv) $ pip install tox
-    (myenv) $ tox
+    $ poetry install
+    $ poetry run pytest
 
-Credits
--------
+Or for the full tox suite:
 
-Tools used in rendering this package:
+::
 
-*  Cookiecutter_
-*  `cookiecutter-djangopackage`_
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`cookiecutter-djangopackage`: https://github.com/pydanny/cookiecutter-djangopackage
+    $ poetry install
+    $ pip install tox
+    $ tox
