@@ -6,7 +6,7 @@ from countries_plus.models import Country
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import QuerySet
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 try:
     from django.utils.encoding import python_2_unicode_compatible
