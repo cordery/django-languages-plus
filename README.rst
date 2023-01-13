@@ -67,10 +67,10 @@ django-countries-plus(https://pypi.python.org/pypi/django-countries-plus) is now
 ---------------------------------------
 Requirements
 ---------------------------------------
-django-countries-plus
+django-countries-plus >= 1.
 
-Django:  Tested against the latest versions of 1.11, 2, and 3.
-
+Django:  Tested against the latest versions of 3, and 4.
+Python 3
 
 
 Running Tests
