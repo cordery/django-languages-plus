@@ -16,8 +16,8 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Framework :: Django",
     "Framework :: Django :: 3.2",
-    "Framework :: Django :: 4.0",
-    "Framework :: Django :: 4.1",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Natural Language :: English",
@@ -26,8 +26,9 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = ">=3.8,<4"
-django = ">=3.2,<5"
+django = ">=3.2,<6"
 django-countries-plus = ">2"
+codecov = "2.1.13"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7"

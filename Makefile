@@ -31,7 +31,7 @@ lint: ## check style with flake8
 	flake8 languages_plus tests
 
 test: ## run tests quickly with the default Python
-	python runtests.py tests
+	poetry run pytest
 
 test-all: ## run tests on every Python version with tox
 	tox
