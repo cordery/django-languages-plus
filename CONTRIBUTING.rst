@@ -66,7 +66,7 @@ Ready to contribute? Here's how to set up `django-languages-plus` for local deve
 
     $ mkvirtualenv django-languages-plus
     $ cd django-languages-plus/
-    $ python setup.py develop
+    $ poetry install
 
 4. Create a branch for local development::
 
@@ -78,7 +78,6 @@ Ready to contribute? Here's how to set up `django-languages-plus` for local deve
    tests, including testing other Python versions with tox::
 
         $ flake8 languages_plus tests
-        $ python setup.py test
         $ tox
 
    To get flake8 and tox, just pip install them into your virtualenv.
