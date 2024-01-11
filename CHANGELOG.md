@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.1.1]
+
+### Changed
+
+- Removed unnecessary codecov dependency
+
 ## [2.1]
 
 ### Added

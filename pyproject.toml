@@ -28,11 +28,9 @@ classifiers = [
 python = ">=3.8,<4"
 django = ">=3.2,<6"
 django-countries-plus = ">2"
-codecov = "2.1.13"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7"
-codecov = "^2"
 pytest = "^7"
 pytest-cov = "^4"
 pytest-django = "^4.5"

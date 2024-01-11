@@ -5,12 +5,8 @@ Django Languages Plus
 .. image:: https://badge.fury.io/py/django-languages-plus.svg
     :target: https://badge.fury.io/py/django-languages-plus
 
-.. image:: https://travis-ci.org/cordery/django-languages-plus.svg?branch=master
-    :target: https://travis-ci.org/cordery/django-languages-plus
-
-.. image:: https://codecov.io/gh/cordery/django-languages-plus/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/cordery/django-languages-plus
-
+.. image:: https://github.com/cordery/django-languages-plus/actions/workflows/tox.yml/badge.svg
+    :target: https://github.com/cordery/django-languages-plus/actions/workflows/tox.yml
 
 
 django-languages-plus provides models and fixtures for working with both common languages and 'culture codes' or locale codes, like pt-BR.
