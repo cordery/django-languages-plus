@@ -69,7 +69,7 @@ Requirements
 ---------------------------------------
 django-countries-plus >= 1.
 
-Django:  Tested against the LTS versions of 3, 4, and the latests of 5.
+Django:  Tested against the LTS versions of 3, 4, and the latest of 5.
 Python 3
 
 
