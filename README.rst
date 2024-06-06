@@ -40,7 +40,7 @@ Installation
 Usage
 ------------
 
-1. Add ``languages_plus`` to your INSTALLED_APPS
+1. Add ``languages_plus`` and ``countries_plus`` to your INSTALLED_APPS.
 
 2. Migrate your database and load the language data fixture::
 
@@ -55,7 +55,7 @@ Usage
 ---------------------------------------
 Generating Culture Codes (ex: pt_BR)
 ---------------------------------------
-django-countries-plus(https://pypi.python.org/pypi/django-countries-plus) is now an explicit requirement.  After installing both packages you can run the following command once to associate the two datasets and generate a list of culture codes (pt_BR for example)::
+django-countries-plus(https://pypi.python.org/pypi/django-countries-plus) is an explicit requirement, and should be installed automatically when installing languages-plus.  When both packages are installed correctly you can run the following command once to associate the two datasets and generate a list of culture codes (pt_BR for example)::
 
         from languages_plus.utils import associate_countries_and_languages
         associate_countries_and_languages()
