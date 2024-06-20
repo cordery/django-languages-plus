@@ -94,6 +94,7 @@ class Language(models.Model):
     iso_639_2B = models.CharField(max_length=3, unique=True, blank=True)
     iso_639_3 = models.CharField(max_length=3, blank=True)
     name_en = models.CharField(max_length=100)
+    name_sv = models.CharField(max_length=100, blank=True)
     name_native = models.CharField(max_length=100)
     family = models.CharField(max_length=50)
     notes = models.CharField(max_length=100, blank=True)
